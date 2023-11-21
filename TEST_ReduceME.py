@@ -1,5 +1,5 @@
 ### Michael Engel ### 2023-11-20 ### TEST_ReduceME.py ###
-from ReduceME import reduce_BinaryTree, reduce_MaryTree
+from ReduceME import reduce_MaryTree_MAP
 import time
 
 #%% dummy methods
@@ -13,25 +13,25 @@ def dummymerger_mary(*items):
 
 #%% main
 if __name__=="__main__":
-    import time
     import numpy as np
     #%%% choose
     Nsamples = 123
     samples = [1]*Nsamples
     threads = 12
-    timeout = 0.2
+    timeout = 0.1
     ordered = False # increases coordination overhead of processes if True
-    m = 4 # m-ary case
+    m = 5 # m-ary case
     
     #%%% binary
     #%%%% query
     #%%%%% multiprocessed
     print("Start multiprocessed binary Reduction!")
     start_multi_binary = time.time()
-    result_multi_binary = reduce_BinaryTree(
+    result_multi_binary = reduce_MaryTree_MAP(
         samples,
         reducer = dummymerger_binary,
         ordered = ordered,
+        m = 2,
         queue = None,
         timeout = timeout,
         threads = threads,
@@ -44,10 +44,11 @@ if __name__=="__main__":
     #%%%%% single process
     print("Start single-process binary Reduction!")
     start_single_binary = time.time()
-    result_single_binary = reduce_BinaryTree(
+    result_single_binary = reduce_MaryTree_MAP(
         samples, 
         reducer = dummymerger_binary, 
         ordered = ordered,
+        m = 2,
         queue = None,
         timeout = timeout,
         threads = 0, 
@@ -72,7 +73,7 @@ if __name__=="__main__":
     #%%%%% multiprocessed
     print(f"Start multiprocessed {m}-ary Reduction!")
     start_multi_mary = time.time()
-    result_multi_mary = reduce_MaryTree(
+    result_multi_mary = reduce_MaryTree_MAP(
         samples,
         reducer = dummymerger_mary,
         ordered = ordered,
@@ -89,7 +90,7 @@ if __name__=="__main__":
     #%%%%% single process
     print(f"Start single-process {m}-ary Reduction!")
     start_single_mary = time.time()
-    result_single_mary = reduce_MaryTree(
+    result_single_mary = reduce_MaryTree_MAP(
         samples, 
         reducer = dummymerger_mary, 
         ordered = ordered,
