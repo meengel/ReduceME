@@ -68,7 +68,7 @@ def _reducefun_MaryTree(
     while True: 
         # check working conditions
         with locky:
-            if not threadcounter.value<=threshold-counter.value-1 and not threshold-counter.value==1:
+            if (not threadcounter.value<=threshold-counter.value-1 and not threshold-counter.value==1) or (threshold-counter.value==1 and threadcounter.value>1):
                 threadcounter.value = threadcounter.value-1
                 if threadcounter.value==0 and not bequiet:
                     logger()
@@ -214,7 +214,7 @@ def reduce_BinaryTree(
     if queue.qsize()==1:
         return queue.get(timeout=timeout)
     else:
-        logger(f"ReduceME.reduce_BinaryTree: something unexpected happened! Queue has still {queue.qsize()} elements but should have one!")
+        logger(f"ReduceME.reduce_BinaryTree: something unexpected happened! Queue has {queue.qsize()} elements but should have one!")
         return queue
 
 #%%% M-ary Tree
@@ -316,5 +316,5 @@ def reduce_MaryTree(
     if queue.qsize()==1:
         return queue.get(timeout=timeout)
     else:
-        logger(f"ReduceME.reduce_MaryTree: something unexpected happened! Queue has still {queue.qsize()} elements but should have one!")
+        logger(f"ReduceME.reduce_MaryTree: something unexpected happened! Queue has {queue.qsize()} elements but should have one!")
         return queue
